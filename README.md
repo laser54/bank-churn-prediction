@@ -4,7 +4,7 @@
 ![pandas](https://img.shields.io/badge/pandas-2.x-150458?logo=pandas&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?logo=scikitlearn&logoColor=white)
 ![Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
-![Status](https://img.shields.io/badge/Status-EDA%20ready-2EA44F)
+![Status](https://img.shields.io/badge/Status-Preprocessing%20ready-2EA44F)
 
 ML project: **predict customer churn** and identify the **main churn drivers** using an end-to-end workflow (EDA → preprocessing → modeling → evaluation → interpretation).
 
@@ -67,6 +67,7 @@ Raw data is not stored in this repository. The EDA notebook supports:
 ### Option A — Google Colab
 Open and run:
 - `notebooks/01_eda.ipynb`
+- `notebooks/02_preprocessing.ipynb`
 
 The notebook can download the dataset using KaggleHub. If your environment requires Kaggle auth, configure it in Colab as usual.
 
@@ -93,7 +94,14 @@ Current repo layout:
 bank-churn-prediction/
 ├── README.md
 ├── notebooks/
-│   └── 01_eda.ipynb
+│   ├── 01_eda.ipynb
+│   └── 02_preprocessing.ipynb
+├── artifacts/
+│   ├── preprocessor.joblib
+│   ├── X_train.parquet
+│   ├── X_test.parquet
+│   ├── y_train.parquet
+│   └── y_test.parquet
 ├── src/
 └── requirements.txt
 ```
@@ -102,9 +110,9 @@ bank-churn-prediction/
 
 ## Notebooks
 - **`01_eda.ipynb`**: data source & acquisition, schema/type inspection, target distribution, data-quality checks, key univariate and churn-vs-feature comparisons
+- **`02_preprocessing.ipynb`**: drops identifier columns, defines feature groups, performs stratified train/test split, builds a reusable `ColumnTransformer` (scaling + one-hot), and saves artifacts to `artifacts/`
 
 Planned:
-- `02_preprocessing.ipynb`
 - `03_baseline.ipynb`
 - `04_models.ipynb`
 - `05_tuning.ipynb`
@@ -123,9 +131,8 @@ Planned:
 ---
 
 ## Roadmap
-Next steps after EDA:
-- preprocessing pipeline (train/test split, encoding, scaling where needed)
-- baseline model + robust evaluation
+Next steps:
+- baseline model + robust evaluation (using `artifacts/` from preprocessing)
 - model comparison (tree ensembles / boosting)
 - threshold tuning with churner recall focus
 - interpretation (feature importance / error analysis / segments)
