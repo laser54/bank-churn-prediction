@@ -10,14 +10,26 @@ st.set_page_config(page_title="Bank Churn Predictor", page_icon="🏦")
 # 1. Load the saved artifacts
 @st.cache_resource
 def load_artifacts():
-    model = joblib.load('artifacts/final_model.joblib')
-    preprocessor = joblib.load('artifacts/preprocessor.joblib')
-    return model, preprocessor
+    try:
+        model = joblib.load('artifacts/final_model.joblib')
+        preprocessor = joblib.load('artifacts/preprocessor.joblib')
+        return model, preprocessor
+    except Exception as e:
+        return None, None
 
-try:
-    model, preprocessor = load_artifacts()
-except Exception as e:
-    st.error(f"Error loading model artifacts: {e}. Please ensure 'artifacts/' folder exists with .joblib files.")
+model, preprocessor = load_artifacts()
+
+if model is None or preprocessor is None:
+    st.error("❌ Failed to load model artifacts.")
+    st.info("""
+    **Possible reasons:**
+    1. The `artifacts/` folder is missing in your repository.
+    2. The `.joblib` files are saved with a different version of `scikit-learn`.
+    
+    **Current local fix attempt:** We have pinned `scikit-learn==1.5.2` in `requirements.txt`. 
+    Please push the changes and wait for the app to rebuild.
+    """)
+    st.stop()
 
 # 2. UI Header
 st.title("🏦 Bank Customer Churn Predictor")
