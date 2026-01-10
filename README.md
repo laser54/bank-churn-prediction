@@ -10,7 +10,20 @@ ML project: **predict customer churn** and identify the **main churn drivers** u
 
 ---
 
+## 🚀 Live Demo
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://bank-churn-prediction-fwfq5zklvke4gxst2fxeuw.streamlit.app/)
+
+**Try the app here:** [Bank Churn Predictor](https://bank-churn-prediction-fwfq5zklvke4gxst2fxeuw.streamlit.app/)
+
+### How to use:
+1.  **Input Features**: Use the sidebar to enter customer details (Age, Balance, Number of Products, etc.).
+2.  **Predict**: Click the **"Analyze Risk"** button.
+3.  **Result**: The app will show the churn probability and a risk level (Low/High).
+
+---
+
 ## Table of contents
+- [Live Demo](#live-demo)
 - [Why this project](#why-this-project)
 - [Problem formulation](#problem-formulation)
 - [Dataset](#dataset)
