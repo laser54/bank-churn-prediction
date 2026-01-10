@@ -4,7 +4,7 @@
 ![pandas](https://img.shields.io/badge/pandas-2.x-150458?logo=pandas&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?logo=scikitlearn&logoColor=white)
 ![Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Preprocessing%20ready-2EA44F)
+![Status](https://img.shields.io/badge/Status-Model%20Complete-2EA44F)
 
 ML project: **predict customer churn** and identify the **main churn drivers** using an end-to-end workflow (EDA → preprocessing → modeling → evaluation → interpretation).
 
@@ -34,7 +34,7 @@ Customer churn is a critical problem for the banking industry: retaining existin
 
 ## Problem formulation
 - **Task type**: binary classification
-- **Target**: customer churn (in the dataset used in `01_eda.ipynb` it is `churn`)
+- **Target**: customer churn (target variable is `churn`)
 - **Primary metric**: ROC-AUC
 - **Secondary metrics**: Recall, Precision, F1
 
@@ -53,10 +53,10 @@ Typical features include:
 - engagement: tenure, active member flag
 
 Target column naming differs across similar churn datasets:
-- this repo’s EDA notebook uses `TARGET_COL = "churn"`
+- this notebook uses 
 - in other common versions the same target may be named `Exited`
 
-Raw data is not stored in this repository. The EDA notebook supports:
+Raw data is not stored in this repository. The notebook supports:
 - **programmatic download** via KaggleHub (Colab-friendly)
 - **local CSV** via `LOCAL_DATA_PATH` (recommended for stable offline runs)
 
@@ -65,11 +65,9 @@ Raw data is not stored in this repository. The EDA notebook supports:
 ## Quickstart
 
 ### Option A — Google Colab
-Open and run:
-- `notebooks/01_eda.ipynb`
-- `notebooks/02_preprocessing.ipynb`
+Open and run `notebooks/run_pipeline.ipynb` in Google Colab.
 
-The notebook can download the dataset using KaggleHub. If your environment requires Kaggle auth, configure it in Colab as usual.
+The notebook can download the dataset using KaggleHub. If your environment requires Kaggle authentication, configure it in Colab as usual.
 
 ### Option B — Local run
 1) Create venv and install deps:
@@ -80,10 +78,15 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-2) Download the CSV locally (from Kaggle) and set in the notebook:
-- `LOCAL_DATA_PATH = Path(".../your.csv")`
+2) Open and run `notebooks/run_pipeline.ipynb` in Jupyter:
+   - The notebook will download data via KaggleHub automatically
+   - Or set `LOCAL_DATA_PATH = Path(".../your.csv")` to use local data
 
-3) Run notebooks in order (starting from `01_eda.ipynb`).
+3) Optional: Run the Streamlit app:
+
+```bash
+streamlit run app.py
+```
 
 ---
 
@@ -94,29 +97,27 @@ Current repo layout:
 bank-churn-prediction/
 ├── README.md
 ├── notebooks/
-│   ├── 01_eda.ipynb
-│   └── 02_preprocessing.ipynb
+│   └── run_pipeline.ipynb     # ⭐ Complete ML pipeline
 ├── artifacts/
-│   ├── preprocessor.joblib
-│   ├── X_train.parquet
-│   ├── X_test.parquet
-│   ├── y_train.parquet
-│   └── y_test.parquet
-├── src/
+│   ├── preprocessor.joblib    # Trained preprocessor
+│   └── final_model.joblib     # Trained CatBoost model
+├── app.py                      # Streamlit web app
 └── requirements.txt
 ```
 
 ---
 
 ## Notebooks
-- **`01_eda.ipynb`**: data source & acquisition, schema/type inspection, target distribution, data-quality checks, key univariate and churn-vs-feature comparisons
-- **`02_preprocessing.ipynb`**: drops identifier columns, defines feature groups, performs stratified train/test split, builds a reusable `ColumnTransformer` (scaling + one-hot), and saves artifacts to `artifacts/`
 
-Planned:
-- `03_baseline.ipynb`
-- `04_models.ipynb`
-- `05_tuning.ipynb`
-- `06_interpretation.ipynb`
+**`run_pipeline.ipynb`** ⭐ — Complete end-to-end ML pipeline:
+- Data source & acquisition (KaggleHub integration)
+- Exploratory data analysis
+- Data preprocessing & feature engineering
+- Baseline Logistic Regression model
+- CatBoost gradient boosting model
+- Hyperparameter optimization with Optuna
+- Model evaluation & business insights
+- Artifact saving
 
 ---
 
@@ -125,17 +126,27 @@ Planned:
 - **pandas / numpy** — data processing
 - **matplotlib / seaborn** — visualization
 - **scikit-learn** — modeling and evaluation
-- (planned) **CatBoost** — main model
-- (planned) **Optuna** — hyperparameter optimization
+- **CatBoost** — gradient boosting model
+- **Optuna** — hyperparameter optimization
+- **Streamlit** — web application
 
 ---
 
 ## Roadmap
-Next steps:
-- baseline model + robust evaluation (using `artifacts/` from preprocessing)
-- model comparison (tree ensembles / boosting)
-- threshold tuning with churner recall focus
-- interpretation (feature importance / error analysis / segments)
+
+**Completed:**
+- ✅ Baseline Logistic Regression model
+- ✅ CatBoost gradient boosting model
+- ✅ Hyperparameter optimization with Optuna
+- ✅ Model evaluation (ROC-AUC ~0.87)
+- ✅ Feature importance analysis
+- ✅ Streamlit web application
+
+**Future improvements:**
+- Threshold tuning with churner recall focus
+- Additional model comparison (XGBoost, LightGBM)
+- Deep error analysis and customer segmentation
+- A/B testing framework for retention campaigns
 
 ---
 
