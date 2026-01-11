@@ -78,7 +78,7 @@ Raw data is not stored in this repository. The notebook supports:
 ## Quickstart
 
 ### Option A — Google Colab
-Open and run `notebooks/run_pipeline.ipynb` in Google Colab.
+Open the public notebook directly: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/158Tygq9jqqtW11sFoQ8QDkJaQD2Abhb6)
 
 The notebook can download the dataset using KaggleHub. If your environment requires Kaggle authentication, configure it in Colab as usual.
 
